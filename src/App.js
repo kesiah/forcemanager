@@ -1,10 +1,13 @@
 import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
 
-import CompaniesList from './components/CompaniesList/CompaniesList';
+import Layout from './components/Layout/Layout';
 
 function App() {
   return (
-    <CompaniesList />
+    <BrowserRouter>
+      <Layout />
+    </BrowserRouter>
   );
 }
 
