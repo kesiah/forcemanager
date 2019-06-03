@@ -32,12 +32,9 @@ class CompaniesList extends Component {
     }
 
     const showResults = (
-      companies.map((el) => {
-        console.log(el);
-        return (
-          <article key={`${el.id}`}><CompanyItem item={el} /></article>
-        );
-      })
+      companies.map(el => (
+        <article key={`${el.id}`}><CompanyItem item={el} /></article>
+      ))
     );
 
     return <div>{showResults}</div>;
