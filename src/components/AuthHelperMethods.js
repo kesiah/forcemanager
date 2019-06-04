@@ -18,6 +18,7 @@ export default class AuthHelperMethods {
   loggedIn = () => {
     // Checks if there is a saved token and it's still valid
     const token = this.getToken();
+    console.log("[AuthHelperMethods] logged in > ", token, (!!token && !this.isTokenExpired(token)));
     return !!token && !this.isTokenExpired(token);
   };
 
