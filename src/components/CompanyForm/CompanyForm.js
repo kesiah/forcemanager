@@ -5,6 +5,8 @@ import AuthHelperMethods from '../AuthHelperMethods';
 import './CompanyForm.scss';
 
 class CompanyForm extends Component {
+  Auth = new AuthHelperMethods();
+
   state = {
     companiesType: [],
     name: '',
@@ -19,11 +21,7 @@ class CompanyForm extends Component {
   }
 
   componentDidMount() {
-    console.log('[componentDidMount]', this.props);
-    const Auth = new AuthHelperMethods();
-
-    Auth.getCompaniesType().then((result) => {
-      console.log("REsult getCompaniesTypeList", result);
+    this.Auth.getCompaniesType().then((result) => {
       this.setState({
         companiesType: result,
       });
@@ -78,36 +76,14 @@ class CompanyForm extends Component {
     };
 
     this.props.onSubmit(data);
-
-    // console.log('postDataHAndler: ', data);
-    // const Auth = new AuthHelperMethods();
-
-    // Auth.fetch('/accounts', {
-    //   method: 'POST',
-    //   body: JSON.stringify(data),
-    // }).then((res) => {
-    //   console.log("Result adding new company", res);
-    //   console.log(this.props);
-    //   // redirect to list of companies
-    //   this.setState({ submitted: true });
-
-    //   setTimeout(() => {
-    //     this.props.history.replace('/');
-    //   }, 1000);
-    // });
   }
 
   render() {
-    console.log("Form render ---->", this.state);
     const {
       companiesType, name, salesRepId1, typeId,
       address1, city, postcode, phone, email, comment,
     } = this.state;
 
-    // if (submitted) {
-    //   console.log("submit");
-    //   return <p>Empresa añadida correctamente. En breve redirección</p>;
-    // }
     return (
       <form onSubmit={this.postDataHandler}>
         <label htmlFor="name">

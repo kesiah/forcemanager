@@ -4,16 +4,15 @@ import AuthHelperMethods from '../AuthHelperMethods';
 import CompanyForm from '../CompanyForm/CompanyForm';
 
 class NewCompany extends Component {
+  Auth = new AuthHelperMethods();
+
   state = {
     submitted: false,
     error: false,
   }
 
   postDataHandler = (data) => {
-    console.log('[NewCompany] postDataHAndler: ', data);
-    const Auth = new AuthHelperMethods();
-
-    Auth.fetch('/accounts', {
+    this.Auth.fetch('/accounts', {
       method: 'POST',
       body: JSON.stringify(data),
     }).then(() => {

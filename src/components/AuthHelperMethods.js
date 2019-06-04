@@ -3,11 +3,9 @@ import decode from 'jwt-decode';
 export default class AuthHelperMethods {
   getCompaniesTypeList = () => {
     // Get a token from api server using the fetch api
-    console.log('getCompaniesTypeList FETCH > ');
     return this.fetch('/accountTypes', {
       method: 'GET',
     }).then((res) => {
-      console.log('setResult FETCH > ', res);
       this.setCompaniesType(res);
       return Promise.resolve(res);
     });
@@ -30,7 +28,6 @@ export default class AuthHelperMethods {
   loggedIn = () => {
     // Checks if there is a saved token and it's still valid
     const token = this.getToken();
-    console.log("[AuthHelperMethods] logged in > ", token, (!!token && !this.isTokenExpired(token)));
     return !!token && !this.isTokenExpired(token);
   };
 

@@ -5,6 +5,8 @@ import AuthHelperMethods from '../AuthHelperMethods';
 import CompanyForm from '../CompanyForm/CompanyForm';
 
 class EditCompany extends Component {
+  Auth = new AuthHelperMethods();
+
   state = {
     submitted: false,
     error: false,
@@ -14,20 +16,15 @@ class EditCompany extends Component {
   componentDidMount() {
     const { id } = this.props.match.params;
 
-    const Auth = new AuthHelperMethods();
-
-    Auth.fetch(`/accounts/${id}`).then((result) => {
-      console.log("Result get company by id", id, result);
+    this.Auth.fetch(`/accounts/${id}`).then((result) => {
       this.setState({ item: result, submitted: false });
     });
   }
 
   postDataHandler = (data) => {
     const { id } = this.props.match.params;
-    console.log('[EditCompany] postDataHAndler ID: ', id, data);
-    const Auth = new AuthHelperMethods();
 
-    Auth.fetch(`/accounts/${id}`, {
+    this.Auth.fetch(`/accounts/${id}`, {
       method: 'PUT',
       body: JSON.stringify(data),
     }).then(() => {
