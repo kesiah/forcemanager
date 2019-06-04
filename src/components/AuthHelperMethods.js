@@ -1,6 +1,18 @@
 import decode from 'jwt-decode';
 
 export default class AuthHelperMethods {
+  getCompaniesTypeList = () => {
+    // Get a token from api server using the fetch api
+    console.log('getCompaniesTypeList FETCH > ');
+    return this.fetch('/accountTypes', {
+      method: 'GET',
+    }).then((res) => {
+      console.log('setResult FETCH > ', res);
+      this.setCompaniesType(res);
+      return Promise.resolve(res);
+    });
+  };
+
   getTokenByKeys = (publicKey, privateKey) => {
     // Get a token from api server using the fetch api
     return this.fetch('/login', {
@@ -35,6 +47,19 @@ export default class AuthHelperMethods {
       console.log('[AuthService.js] expired check failed!');
       return false;
     }
+  };
+
+  setCompaniesType = companies => (
+    // Saves companies type array to localStorage
+    localStorage.setItem('comapnies_type', JSON.stringify(companies))
+  );
+
+  getCompaniesType = () => {
+    // Retrieves the companies type array from localStorage
+    const companies = localStorage.getItem('comapnies_type');
+
+    if (companies) return Promise.resolve(JSON.parse(companies));
+    return this.getCompaniesTypeList();
   };
 
   setToken = idToken => (
