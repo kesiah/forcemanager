@@ -2,9 +2,13 @@ import React, { Component } from 'react';
 // import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 import withAuth from '../withAuth';
+import AuthHelperMethods from '../AuthHelperMethods';
+
+import './NewCompany.scss';
 
 class NewCompany extends Component {
   state = {
+    companiesType: [],
     submitted: false,
     name: '',
     salesRepId1: '',
@@ -19,6 +23,14 @@ class NewCompany extends Component {
 
   componentDidMount() {
     console.log(this.props);
+    const Auth = new AuthHelperMethods();
+
+    Auth.getCompaniesType().then((res) => {
+      console.log("REsult getCompaniesTypeList", res);
+      this.setState({
+        companiesType: res
+      });
+    });
   }
 
   postDataHandler = () => {
@@ -52,87 +64,92 @@ class NewCompany extends Component {
       <div className="NewCompany">
         {/* {redirect} */}
         <h1>Añadir nueva empresa</h1>
-        <label htmlFor="name">
-          Nombre
+        <form onSubmit={this.postDataHandler}>
+          <label htmlFor="name">
+            Nombre
           <input
-            id="name"
-            type="text"
-            value={this.state.name}
-            onChange={event => this.setState({ name: event.target.value })}
-          />
-        </label>
-        <label htmlFor="salesRepId1">
-          Responsable
+              required
+              id="name"
+              type="text"
+              value={this.state.name}
+              onChange={event => this.setState({ name: event.target.value })}
+            />
+          </label>
+          <label htmlFor="salesRepId1">
+            Responsable
           <input
-            id="salesRepId1"
-            type="text"
-            value={this.state.salesRepId1}
-            onChange={event => this.setState({ salesRepId1: event.target.value })}
-          />
-        </label>
-        <label htmlFor="typeId">
-          Tipo de empresa
+              required
+              id="salesRepId1"
+              type="text"
+              value={this.state.salesRepId1}
+              onChange={event => this.setState({ salesRepId1: event.target.value })}
+            />
+          </label>
+          <label htmlFor="typeId">
+            Tipo de empresa
           <input
-            id="typeId"
-            type="text"
-            value={this.state.typeId}
-            onChange={event => this.setState({ typeId: event.target.value })}
-          />
-        </label>
-        <label htmlFor="address1">
-          Dirección
+              required
+              id="typeId"
+              type="text"
+              value={this.state.typeId}
+              onChange={event => this.setState({ typeId: event.target.value })}
+            />
+          </label>
+          <label htmlFor="address1">
+            Dirección
           <input
-            id="address1"
-            type="text"
-            value={this.state.address1}
-            onChange={event => this.setState({ address1: event.target.value })}
-          />
-        </label>
-        <label htmlFor="city">
-          Ciudad
+              id="address1"
+              type="text"
+              value={this.state.address1}
+              onChange={event => this.setState({ address1: event.target.value })}
+            />
+          </label>
+          <label htmlFor="city">
+            Ciudad
           <input
-            id="city"
-            type="text"
-            value={this.state.city}
-            onChange={event => this.setState({ city: event.target.value })}
-          />
-        </label>
-        <label htmlFor="postcode">
-          Código postal
+              id="city"
+              type="text"
+              value={this.state.city}
+              onChange={event => this.setState({ city: event.target.value })}
+            />
+          </label>
+          <label htmlFor="postcode">
+            Código postal
           <input
-            id="postcode"
-            type="text"
-            value={this.state.postcode}
-            onChange={event => this.setState({ postcode: event.target.value })}
-          />
-        </label>
-        <label htmlFor="phone">
-          Teléfono
+              id="postcode"
+              type="text"
+              value={this.state.postcode}
+              onChange={event => this.setState({ postcode: event.target.value })}
+            />
+          </label>
+          <label htmlFor="phone">
+            Teléfono
           <input
-            id="phone"
-            type="text"
-            value={this.state.phone}
-            onChange={event => this.setState({ phone: event.target.value })}
-          />
-        </label>
-        <label htmlFor="email">
-          Correo electrónico de la empresa
+              id="phone"
+              type="text"
+              value={this.state.phone}
+              onChange={event => this.setState({ phone: event.target.value })}
+            />
+          </label>
+          <label htmlFor="email">
+            Correo electrónico de la empresa
           <input
-            id="email"
-            type="email"
-            value={this.state.email}
-            onChange={event => this.setState({ email: event.target.value })}
-          />
-        </label>
-        <label htmlFor="comment">
-          Comentarios
+              id="email"
+              type="email"
+              value={this.state.email}
+              onChange={event => this.setState({ email: event.target.value })}
+            />
+          </label>
+          <label htmlFor="comment">
+            Comentarios
           <textarea
-            id="comment"
-            rows="4"
-            value={this.state.comment}
-            onChange={(event) => this.setState({ comment: event.target.value })} />
-        </label>
-        <button onClick={this.postDataHandler}>Enviar</button>
+              id="comment"
+              rows="4"
+              value={this.state.comment}
+              onChange={(event) => this.setState({ comment: event.target.value })} />
+          </label>
+          <button type="submit">Enviar</button>
+        </form>
       </div>
     );
   }
