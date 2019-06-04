@@ -65,20 +65,20 @@ class CompaniesList extends Component {
     );
 
     if (error) {
-      return <div>Error cargando empresas</div>;
+      return <div className="error-message">Error cargando empresas</div>;
     }
 
     if (errorDeleting) {
-      modalHtml = <p>Error borrando empresa</p>;
+      modalHtml = <div className="error-message">Error borrando empresa</div>;
     }
 
     if (isLoading) {
-      return <div>Loading...</div>;
+      return <div className="loading" />;
     }
 
     const showResults = (
       companies.map(el => (
-        <article key={`${el.id}`}><CompanyItem item={el} handleDelete={this.openDeleteModal} /></article>
+        <React.Fragment key={`${el.id}`}><CompanyItem item={el} handleDelete={this.openDeleteModal} /></React.Fragment>
       ))
     );
 

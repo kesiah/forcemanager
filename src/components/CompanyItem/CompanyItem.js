@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
+import './CompanyItem.scss';
+
 const CompanyItem = (props) => {
   const { item, handleDelete } = props;
 
@@ -30,16 +32,16 @@ const CompanyItem = (props) => {
   const typeCompany = (typeId) ? typeId.value : '';
 
   return (
-    <div>
+    <div className="company-item">
       <h2>{name}</h2>
       <div>{salesResponsible}</div>
       <div>{formatDate(dateCreated)}</div>
       <div>{typeCompany}</div>
       <div>{address}</div>
       <div>{country}</div>
-      <ul>
+      <ul className="actions">
         <li>
-          <Link to={`/company/${id}`}>Editar</Link>
+          <Link className="edit" to={`/company/${id}`}>Editar</Link>
         </li>
         <li>
           <button className="delete" type="button" onClick={() => handleDelete(id)}>Eliminar</button>

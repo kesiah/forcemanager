@@ -1,0 +1,40 @@
+@import '../../assets/styles/_functions.scss';
+@import '../../assets/styles/_colors.scss';
+
+.company-item {
+  margin-bottom: rem-calc(20px);
+  
+  &:nth-child(2n + 1) {
+    @media (min-width: 30em) and (max-width: 47.938em) {
+      clear: both;
+    }
+  }
+
+  &:nth-child(3n + 1) {
+    @media (min-width: 48em) {
+      clear: both;
+    }
+  }
+
+  @media (min-width: 30em) {
+		float: left;
+    width: 50%;
+  }
+
+  @media (min-width: 48em) {
+    width: 33.33333333333333%;
+  }
+
+  .actions {
+    li {
+      display: inline-block;
+      margin-right: rem-calc(7px);
+    }
+  }
+
+  .edit, .delete {
+    outline: none;
+    color: $brand;
+    text-decoration: underline;
+  }
+}

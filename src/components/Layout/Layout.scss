@@ -1,0 +1,33 @@
+@import '../../assets/styles/_functions.scss';
+@import '../../assets/styles/_colors.scss';
+@import '../../assets/styles/_extends.scss';
+
+#header {
+  padding: rem-calc(15px);
+  text-align: center;
+
+  li {
+    display: inline-block;
+    margin: rem-calc(0 10px);
+
+    a {
+      @extend %border-radius;
+      padding: rem-calc(7px 10px);
+      border: 1px solid $brand;
+      color: $brand;
+      text-decoration: none;
+      display: inline-block;
+
+      &.active, &:hover {
+        color: white;
+        background: $brand;
+      }
+    }
+  }
+}
+
+#main {
+  max-width: 1000px;
+  margin: rem-calc(25px auto);
+  padding: rem-calc(0 15px);
+}

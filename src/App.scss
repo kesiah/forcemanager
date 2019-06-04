@@ -1,0 +1,38 @@
+@import './assets/styles/_functions.scss';
+@import './assets/styles/_extends.scss';
+@import './assets/styles/_colors.scss';
+
+.loading {
+  display: block;
+  width: 64px;
+  height: 64px;
+  margin: 0 auto;
+
+  &::after {
+    content: ' ';
+    display: block;
+    width: 46px;
+    height: 46px;
+    margin: 1px;
+    border-radius: 50%;
+    border: 5px solid $brand;
+    border-color: $brand transparent $brand transparent;
+    animation: loader-animation 1.2s linear infinite;
+  }
+}
+
+@keyframes loader-animation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.error-message {
+  @extend %border-radius;
+  padding: rem-calc(15px);
+  border: 1px solid $red;
+  color: $red;
+}
