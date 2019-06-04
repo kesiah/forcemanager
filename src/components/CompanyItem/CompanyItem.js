@@ -2,7 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-const CompanyItem = ({ item }) => {
+const CompanyItem = (props) => {
+  const { item, handleDelete } = props;
+
   const {
     id, name, salesRepId1, dateCreated, typeId, address1, address2, countryId,
   } = item;
@@ -38,9 +40,10 @@ const CompanyItem = ({ item }) => {
       <ul>
         <li>
           <Link to={`/company/${id}`}>Editar</Link>
-          {/* <button className="edit" type="button">Editar</button> */}
         </li>
-        <li><button className="delete" type="button">Eliminar</button></li>
+        <li>
+          <button className="delete" type="button" onClick={() => handleDelete(id)}>Eliminar</button>
+        </li>
       </ul>
     </div>
   );
@@ -56,6 +59,7 @@ CompanyItem.propTypes = {
     countryId: PropTypes.object,
     salesRepId1: PropTypes.object,
   }).isRequired,
+  handleDelete: PropTypes.func.isRequired,
 };
 
 export default CompanyItem;
