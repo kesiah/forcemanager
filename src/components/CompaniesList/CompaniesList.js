@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import AuthHelperMethods from '../AuthHelperMethods';
 import CompanyItem from '../CompanyItem/CompanyItem';
+import withAuth from '../withAuth';
 
 class CompaniesList extends Component {
   Auth = new AuthHelperMethods();
@@ -41,4 +42,4 @@ class CompaniesList extends Component {
   }
 }
 
-export default CompaniesList;
+export default withAuth(CompaniesList);

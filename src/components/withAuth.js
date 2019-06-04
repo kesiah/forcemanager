@@ -37,12 +37,15 @@ export default function withAuth(AuthComponent) {
       const { loaded, confirm } = this.state;
       if (loaded === true) {
         if (confirm) {
-          console.log('confirmed!');
+          console.log('confirmed!', this.props);
           return (
             // component that is currently being wrapper
             <AuthComponent
               history={this.props.history}
+              match={this.props.match}
+              location={this.props.location}
               confirm={confirm}
+              {...this.props}
             />
           );
         }

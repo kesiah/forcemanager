@@ -1,9 +1,10 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 const CompanyItem = ({ item }) => {
   const {
-    name, salesRepId1, dateCreated, typeId, address1, address2, countryId,
+    id, name, salesRepId1, dateCreated, typeId, address1, address2, countryId,
   } = item;
 
   const formatDate = (valueDate) => {
@@ -34,6 +35,13 @@ const CompanyItem = ({ item }) => {
       <div>{typeCompany}</div>
       <div>{address}</div>
       <div>{country}</div>
+      <ul>
+        <li>
+          <Link to={`/company/${id}`}>Editar</Link>
+          {/* <button className="edit" type="button">Editar</button> */}
+        </li>
+        <li><button className="delete" type="button">Eliminar</button></li>
+      </ul>
     </div>
   );
 };
