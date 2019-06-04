@@ -60,7 +60,7 @@ class CompanyForm extends Component {
     e.preventDefault();
 
     const {
-      name, salesRepId1, typeId, address1, city, postcode, phone, email, comment,
+      name, typeId, address1, city, postcode, phone, email, comment,
     } = this.state;
 
     const data = {
