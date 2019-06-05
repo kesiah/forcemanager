@@ -30,9 +30,66 @@
   }
 }
 
-.error-message {
+.title {
+  margin-bottom: rem-calc(15px);
+  font-size: rem-calc(22px);
+}
+
+.error-message, .success-message {
   @extend %border-radius;
   padding: rem-calc(15px);
-  border: 1px solid $red;
-  color: $red;
+}
+
+.error-message {
+  border: 1px solid $error-border;
+  background-color: $error-background;
+  color: $error-text;
+}
+
+.success-message {
+  border: 1px solid $success-border;
+  background-color: $success-background;
+  color: $success-text;
+}
+
+
+form {
+  .error {
+    border: 1px solid $error-border;
+    background-color: $error-background;
+    color: $error-text;
+  }
+
+  .input-feedback {
+    font-size: rem-calc(12px);
+  }
+
+  // submit button
+  button {
+    @extend %border-radius;
+    cursor: pointer;
+    padding: rem-calc(7px 10px);
+    border: 1px solid $brand;
+    background: $brand;
+    color: white;
+
+    &:hover {
+      border: 1px solid $brand;
+      background: white;
+      color: $brand;
+    }
+  }
+
+  input, textarea, select {
+    @extend %border-radius;
+    margin-top: rem-calc(3px);
+    padding: rem-calc(5px);
+    width: 100%;
+    border: 1px solid grey;
+  }
+
+  label {
+    margin-bottom: rem-calc(10px);
+    display: block;
+  }
 }

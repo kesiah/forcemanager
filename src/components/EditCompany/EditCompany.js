@@ -48,16 +48,16 @@ class EditCompany extends Component {
     } = this.state;
 
     if (error) {
-      return <p>Error al guardar los datos</p>;
+      return <div className="error-message">Error al guardar los datos</div>;
     }
 
     if (submitted) {
-      return <p>Empresa editada correctamente. En breve redirección</p>;
+      return <div className="success-message">Empresa editada correctamente.</div>;
     }
 
     return (
       <div>
-        <h1>Editar empresa</h1>
+        <h1 className="title">Editar empresa</h1>
         <CompanyForm onSubmit={this.postDataHandler} item={this.state.item} />
       </div>
     );

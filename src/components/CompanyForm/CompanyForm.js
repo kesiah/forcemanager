@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import withAuth from '../withAuth';
 import AuthHelperMethods from '../AuthHelperMethods';
 
-import './CompanyForm.scss';
-
 class CompanyForm extends Component {
   Auth = new AuthHelperMethods();
 
@@ -30,6 +28,7 @@ class CompanyForm extends Component {
 
   componentWillReceiveProps(nextProps) {
     const { item } = nextProps;
+
     if (item !== this.props.item) {
       const salesRepId1 = (item.salesRepId1) ? item.salesRepId1.id : '';
       const typeId = (item.typeId) ? item.typeId.id : null;

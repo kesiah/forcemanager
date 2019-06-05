@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 import withAuth from '../withAuth';
 import AuthHelperMethods from '../AuthHelperMethods';
 import CompanyForm from '../CompanyForm/CompanyForm';
@@ -34,18 +35,18 @@ class NewCompany extends Component {
       submitted,
       error,
     } = this.state;
-    // let redirect = null;
 
     if (error) {
-      return <p>Error al crear nueva empresa</p>;
+      return <div className="error-message">Error al crear nueva empresa</div>;
     }
 
     if (submitted) {
-      return <p>Empresa añadida correctamente. En breve redirección</p>;
+      return <div className="success-message">Empresa añadida correctamente. En breve redirección</div>;
     }
+
     return (
       <div>
-        <h1>Añadir nueva empresa</h1>
+        <h1 className="title">Añadir nueva empresa</h1>
         <CompanyForm onSubmit={this.postDataHandler} />
       </div>
     );

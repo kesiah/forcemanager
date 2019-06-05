@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 
 import AuthHelperMethods from '../AuthHelperMethods';
+import './Login.scss';
 
 class Login extends Component {
   Auth = new AuthHelperMethods();
