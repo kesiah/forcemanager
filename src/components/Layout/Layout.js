@@ -8,8 +8,8 @@ import Login from '../Login/Login';
 
 import './Layout.scss';
 
-const Layout = () => (
-  <div>
+const Layout = () => {
+  const header = (
     <header id="header">
       <nav>
         <ul>
@@ -34,15 +34,25 @@ const Layout = () => (
         </ul>
       </nav>
     </header>
-    <section id="main">
-      <Switch>
-        <Route path="/login" component={Login} />
-        <Route path="/company/:id" component={EditCompany} />
-        <Route path="/new-company" exact component={NewCompany} />
-        <Route path="/" exact component={CompaniesList} />
-      </Switch>
-    </section>
-  </div>
-);
+  );
+
+  return (
+    <div>
+      <Route render={({ location }) => (
+        location.pathname.indexOf('/login') === -1 ? header : null
+      )}
+      />
+
+      <section id="main">
+        <Switch>
+          <Route path="/login" component={Login} />
+          <Route path="/company/:id" component={EditCompany} />
+          <Route path="/new-company" exact component={NewCompany} />
+          <Route path="/" exact component={CompaniesList} />
+        </Switch>
+      </section>
+    </div>
+  );
+};
 
 export default Layout;

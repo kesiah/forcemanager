@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { Formik, Field } from 'formik';
+import * as Yup from 'yup';
+
 import withAuth from '../withAuth';
 import AuthHelperMethods from '../AuthHelperMethods';
 
@@ -55,12 +58,10 @@ class CompanyForm extends Component {
     }
   }
 
-  postDataHandler = (e) => {
-    e.preventDefault();
-
+  postDataHandler = (values, setSubmitting) => {
     const {
       name, typeId, address1, city, postcode, phone, email, comment,
-    } = this.state;
+    } = values;
 
     const data = {
       name,
@@ -75,104 +76,167 @@ class CompanyForm extends Component {
     };
 
     this.props.onSubmit(data);
+    setSubmitting(false);
   }
 
   render() {
-    const {
-      companiesType, name, salesRepId1, typeId,
-      address1, city, postcode, phone, email, comment,
-    } = this.state;
-
     return (
-      <form onSubmit={this.postDataHandler}>
-        <label htmlFor="name">
-          Nombre
-          <input
-            required
-            id="name"
-            type="text"
-            value={name}
-            onChange={event => this.setState({ name: event.target.value })}
-          />
-        </label>
-        <label htmlFor="salesRepId1">
-          Responsable
-          <input
-            required
-            id="salesRepId1"
-            type="text"
-            value={salesRepId1}
-            onChange={event => this.setState({ salesRepId1: event.target.value })}
-          />
-        </label>
-        <label htmlFor="typeId">
-          Tipo de empresa
-          <select
-            name="typeId"
-            id="typeId"
-            onBlur={event => this.setState({ typeId: parseInt(event.target.value, 10) })}
-          >
-            {companiesType.map(el => (
-              <option key={el.id} value={el.id}>{el.descriptionES}</option>
-            ))}
-          </select>
-        </label>
-        <label htmlFor="address1">
-          Dirección
-          <input
-            id="address1"
-            type="text"
-            value={address1}
-            onChange={event => this.setState({ address1: event.target.value })}
-          />
-        </label>
-        <label htmlFor="city">
-          Ciudad
-          <input
-            id="city"
-            type="text"
-            value={city}
-            onChange={event => this.setState({ city: event.target.value })}
-          />
-        </label>
-        <label htmlFor="postcode">
-          Código postal
-          <input
-            id="postcode"
-            type="text"
-            value={postcode}
-            onChange={event => this.setState({ postcode: event.target.value })}
-          />
-        </label>
-        <label htmlFor="phone">
-          Teléfono
-          <input
-            id="phone"
-            type="text"
-            value={phone}
-            onChange={event => this.setState({ phone: event.target.value })}
-          />
-        </label>
-        <label htmlFor="email">
-          Correo electrónico de la empresa
-          <input
-            id="email"
-            type="email"
-            value={email}
-            onChange={event => this.setState({ email: event.target.value })}
-          />
-        </label>
-        <label htmlFor="comment">
-          Comentarios
-          <textarea
-            id="comment"
-            rows="4"
-            value={comment}
-            onChange={event => this.setState({ comment: event.target.value })}
-          />
-        </label>
-        <button type="submit">Enviar</button>
-      </form>
+      <Formik
+        initialValues={this.state}
+        enableReinitialize
+        onSubmit={(values, { setSubmitting }) => {
+          this.postDataHandler(values, setSubmitting);
+        }}
+        validationSchema={Yup.object().shape({
+          name: Yup.string().required('Campo requerido'),
+          salesRepId1: Yup.string().required('Campo requerido'),
+          address1: Yup.string(),
+          city: Yup.string(),
+          postcode: Yup.string().matches(/^(?:0[1-9]|[1-4]\d|5[0-2])\d{3}$/, 'Añade un código postal correcto'),
+          phone: Yup.string().matches(/^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/, 'Introduce un teléfono correcto'),
+          email: Yup.string().email('Introduce un correo electrónico correcto'),
+          comment: Yup.string().max(250, 'Carácterres máximos superados'),
+        })}
+      >
+        {(props) => {
+          const {
+            values,
+            touched,
+            errors,
+            dirty,
+            isSubmitting,
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            setFieldValue,
+          } = props;
+          return (
+            <form onSubmit={handleSubmit}>
+              <label htmlFor="name">
+                Nombre
+                <Field
+                  type="text"
+                  name="name"
+                  value={values.name}
+                  className={
+                    errors.name && touched.name ? 'text-input error' : 'text-input'
+                  }
+                />
+                {errors.name && touched.name && (
+                  <div className="input-feedback">{errors.name}</div>
+                )}
+              </label>
+              <label htmlFor="salesRepId1">
+                Responsable
+                <Field
+                  type="text"
+                  name="salesRepId1"
+                  className={
+                    errors.salesRepId1 && touched.salesRepId1 ? 'text-input error' : 'text-input'
+                  }
+                />
+                {errors.salesRepId1 && touched.salesRepId1 && (
+                  <div className="input-feedback">{errors.salesRepId1}</div>
+                )}
+              </label>
+              <label htmlFor="typeId">
+                Tipo de empresa
+                <Field
+                  component="select"
+                  name="typeId"
+                  onBlur={event => setFieldValue('typeId', parseInt(event.target.value, 10))}
+                >
+                  {values.companiesType.map(el => (
+                    <option key={el.id} value={el.id}>{el.descriptionES}</option>
+                  ))}
+                </Field>
+              </label>
+              <label htmlFor="address1">
+                Dirección
+                <Field
+                  type="text"
+                  name="address1"
+                  className={
+                    errors.address1 && touched.address1 ? 'text-input error' : 'text-input'
+                  }
+                />
+                {errors.address1 && touched.address1 && (
+                  <div className="input-feedback">{errors.address1}</div>
+                )}
+              </label>
+              <label htmlFor="city">
+                Ciudad
+                <Field
+                  type="text"
+                  name="city"
+                  className={
+                    errors.city && touched.city ? 'text-input error' : 'text-input'
+                  }
+                />
+                {errors.city && touched.city && (
+                  <div className="input-feedback">{errors.city}</div>
+                )}
+              </label>
+              <label htmlFor="postcode">
+                Código postal
+                <Field
+                  type="text"
+                  name="postcode"
+                  className={
+                    errors.postcode && touched.postcode ? 'text-input error' : 'text-input'
+                  }
+                />
+                {errors.postcode && touched.postcode && (
+                  <div className="input-feedback">{errors.postcode}</div>
+                )}
+              </label>
+              <label htmlFor="phone">
+                Teléfono
+                <Field
+                  type="tel"
+                  name="phone"
+                  className={
+                    errors.phone && touched.phone ? 'text-input error' : 'text-input'
+                  }
+                />
+                {errors.phone && touched.phone && (
+                  <div className="input-feedback">{errors.phone}</div>
+                )}
+              </label>
+              <label htmlFor="email">
+                Correo electrónico de la empresa
+                <Field
+                  type="email"
+                  name="email"
+                  className={
+                    errors.email && touched.email ? 'text-input error' : 'text-input'
+                  }
+                />
+                {errors.email && touched.email && (
+                  <div className="input-feedback">{errors.email}</div>
+                )}
+              </label>
+              <label htmlFor="comment">
+                Comentarios
+                <Field
+                  name="comment"
+                  component="textarea"
+                  rows="4"
+                  className={
+                    errors.comment && touched.comment ? 'text-input error' : 'text-input'
+                  }
+                />
+                {errors.comment && touched.comment && (
+                  <div className="input-feedback">{errors.comment}</div>
+                )}
+              </label>
+              <button type="submit" disabled={isSubmitting}>
+                Enviar
+              </button>
+            </form>
+          );
+        }}
+      </Formik>
     );
   }
 }

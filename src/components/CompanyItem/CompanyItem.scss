@@ -4,13 +4,13 @@
 .company-item {
   margin-bottom: rem-calc(20px);
   
-  &:nth-child(2n + 1) {
+  &:nth-child(2n+1) {
     @media (min-width: 30em) and (max-width: 47.938em) {
       clear: both;
     }
   }
 
-  &:nth-child(3n + 1) {
+  &:nth-child(3n+1) {
     @media (min-width: 48em) {
       clear: both;
     }

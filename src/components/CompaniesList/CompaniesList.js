@@ -86,7 +86,9 @@ class CompaniesList extends Component {
     return (
       <div>
         <h1 className="title">Listado de empresas</h1>
-        {showResults}
+        <div>
+          {showResults}
+        </div>
         <Modal open={openModal} onClose={this.onCloseModal} center>
           {modalHtml}
         </Modal>
