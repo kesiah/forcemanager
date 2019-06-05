@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
+import { Formik, Field } from 'formik';
+import * as Yup from 'yup';
 
 import AuthHelperMethods from '../AuthHelperMethods';
 import './Login.scss';
@@ -12,56 +14,87 @@ class Login extends Component {
     privateKey: '2ec6347d6c9ea6a8468cbfd2d9f1574abb85ee60874828ad66b24490a8e2219d4c553e7d1ddc6',
   }
 
-  handleChange = (e) => {
-    this.setState(
-      {
-        [e.target.name]: e.target.value,
-      },
-    );
-  }
-
-  handleFormSubmit = (e) => {
-    e.preventDefault();
-
-    const { publicKey, privateKey } = this.state;
+  handleFormSubmit = (data, setSubmitting) => {
+    const { publicKey, privateKey } = data;
 
     this.Auth.getTokenByKeys(publicKey, privateKey)
       .then((res) => {
         if (res === false) {
           return alert("Sorry those credentials don't exist!");
         }
-        this.props.history.replace("/");
+        this.props.history.replace('/');
       })
       .catch((err) => {
+        setSubmitting(false);
         alert(err);
       });
   }
 
   render() {
-    const { publicKey, privateKey } = this.state;
-
     if (this.Auth.loggedIn()) {
       return <Redirect to="/" />;
     }
 
     return (
-      <form>
-        <input
-          placeholder="Public Key"
-          name="publicKey"
-          type="text"
-          value={publicKey}
-          onChange={this.handleChange}
-        />
-        <input
-          placeholder="Private key"
-          name="privateKey"
-          type="text"
-          value={privateKey}
-          onChange={this.handleChange}
-        />
-        <button type="button" onClick={this.handleFormSubmit}>Get Token</button>
-      </form>
+      <Formik
+        initialValues={this.state}
+        onSubmit={(values, { setSubmitting }) => {
+          this.handleFormSubmit(values, setSubmitting);
+        }}
+        validationSchema={Yup.object().shape({
+          publicKey: Yup.string().required('Campo requerido'),
+          privateKey: Yup.string().required('Campo requerido'),
+        })}
+      >
+        {(props) => {
+          const {
+            values,
+            touched,
+            errors,
+            dirty,
+            isSubmitting,
+            handleChange,
+            handleBlur,
+            handleSubmit,
+          } = props;
+          return (
+            <form onSubmit={handleSubmit} className="login-form">
+              <label htmlFor="publicKey">
+                Public Key
+                <Field
+                  type="text"
+                  name="publicKey"
+                  value={values.publicKey}
+                  className={
+                    errors.publicKey && touched.publicKey ? 'text-input error' : 'text-input'
+                  }
+                />
+                {errors.publicKey && touched.publicKey && (
+                  <div className="input-feedback">{errors.publicKey}</div>
+                )}
+              </label>
+
+              <label htmlFor="privateKey">
+                Private Key
+                <Field
+                  type="text"
+                  name="privateKey"
+                  value={values.privateKey}
+                  className={
+                    errors.privateKey && touched.privateKey ? 'text-input error' : 'text-input'
+                  }
+                />
+                {errors.privateKey && touched.privateKey && (
+                  <div className="input-feedback">{errors.privateKey}</div>
+                )}
+              </label>
+              <button type="submit" disabled={isSubmitting}>
+                Get Token
+              </button>
+            </form>
+          );
+        }}
+      </Formik>
     );
   }
 }
