@@ -1,0 +1,26 @@
+@import '../../assets/styles/_functions.scss';
+@import '../../assets/styles/_colors.scss';
+@import '../../assets/styles/_extends.scss';
+
+.custom-modal {
+  .modal-actions {
+    text-align: center;
+    margin-top: rem-calc(15px);
+
+    [type="button"] {
+      @extend %border-radius;
+      outline: none;
+      margin: rem-calc(0 5px);
+      padding: rem-calc(7px 10px);
+      border: 1px solid $brand;
+      color: $brand;
+      text-decoration: none;
+      display: inline-block;
+
+      &:hover {
+        color: white;
+        background: $brand;
+      }
+    }
+  }
+}

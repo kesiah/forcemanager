@@ -5,6 +5,8 @@ import AuthHelperMethods from '../AuthHelperMethods';
 import CompanyItem from '../CompanyItem/CompanyItem';
 import withAuth from '../withAuth';
 
+import './CompaniesList.scss';
+
 class CompaniesList extends Component {
   Auth = new AuthHelperMethods();
 
@@ -59,8 +61,10 @@ class CompaniesList extends Component {
     let modalHtml = (
       <React.Fragment>
         <h4>¿Realmente quieres eliminar esta empresa?</h4>
-        <button type="button" onClick={this.confirmDeleteCompany}>Aceptar</button>
-        <button type="button" onClick={this.onCloseModal}>Cancelar</button>
+        <div className="modal-actions">
+          <button type="button" onClick={this.confirmDeleteCompany}>Aceptar</button>
+          <button type="button" onClick={this.onCloseModal}>Cancelar</button>
+        </div>
       </React.Fragment>
     );
 
@@ -89,7 +93,7 @@ class CompaniesList extends Component {
         <div>
           {showResults}
         </div>
-        <Modal open={openModal} onClose={this.onCloseModal} center>
+        <Modal open={openModal} onClose={this.onCloseModal} classNames={{ modal: 'custom-modal' }} showCloseIcon={false} center>
           {modalHtml}
         </Modal>
       </div>
