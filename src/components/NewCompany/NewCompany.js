@@ -41,7 +41,7 @@ class NewCompany extends Component {
     }
 
     if (submitted) {
-      return <div className="success-message">Empresa añadida correctamente. En breve redirección</div>;
+      return <div className="success-message">Empresa añadida correctamente.</div>;
     }
 
     return (
