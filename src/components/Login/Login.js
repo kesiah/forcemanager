@@ -10,8 +10,8 @@ class Login extends Component {
   Auth = new AuthHelperMethods();
 
   state = {
-    publicKey: 'd61f7d2efc47f2c31ddec8fd1e4e512a0f1fe',
-    privateKey: '2ec6347d6c9ea6a8468cbfd2d9f1574abb85ee60874828ad66b24490a8e2219d4c553e7d1ddc6',
+    publicKey: '',
+    privateKey: '',
   }
 
   handleFormSubmit = (data, setSubmitting) => {
